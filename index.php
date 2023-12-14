@@ -1,12 +1,10 @@
 <?php
+    $http_response_code = 200; 
 
-function welcome()
-{
-    http_response_code(200); // OK
-    $response = array("message" => "Welcome to the API!");
+    http_response_code($http_response_code); 
+    $response = array(
+        "code" => $http_response_code,
+        "message" => "Welcome to the API :3"
+    );
     echo json_encode($response);
-}
-
-
-
 ?>
