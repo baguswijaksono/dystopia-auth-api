@@ -11,7 +11,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['emai
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Prepare an SQL statement to insert data into the database
-    $stmt = $conn->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO user (username, password, email) VALUES (?, ?, ?)");
 
     // Bind parameters to prevent SQL injection
     $stmt->bind_param("sss", $username, $hashedPassword, $email);

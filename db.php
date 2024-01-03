@@ -1,12 +1,12 @@
 <?php
 $dbConfig = array(
     "servername" => "localhost",
-    "username" => "",
+    "username" => "root",
     "password" => "",
-    "dbname" => ""
+    "database" => "dystopia"
 );
 
-$conn = new mysqli($dbConfig['servername'], $dbConfig['username'], $dbConfig['password'], $dbConfig['dbname']);
+$conn = new mysqli($dbConfig['servername'], $dbConfig['username'], $dbConfig['password'], $dbConfig['database']);
 
 if ($conn->connect_error) {
     http_response_code(500);
