@@ -15,7 +15,8 @@ SELECT User.username, User.email, User.points,
        GROUP_CONCAT(DISTINCT area.area) AS unlocked_areas,
        GROUP_CONCAT(DISTINCT ability.ability) AS unlocked_abilities,
        GROUP_CONCAT(DISTINCT Checkpoints.checkpoint) AS latest_checkpoints,
-       GROUP_CONCAT(DISTINCT item.item) AS unlocked_items
+       GROUP_CONCAT(DISTINCT item.item) AS unlocked_items,
+       GROUP_CONCAT(DISTINCT achievement.achievement) AS unlocked_achievements
 FROM User
 LEFT JOIN unlockedArea ON User.id = unlockedArea.user_id
 LEFT JOIN area ON unlockedArea.area_id = area.id
@@ -25,9 +26,11 @@ LEFT JOIN latestCheckpoint ON User.id = latestCheckpoint.userID
 LEFT JOIN Checkpoints ON latestCheckpoint.CheckpointID = Checkpoints.id
 LEFT JOIN unlockedItem ON User.id = unlockedItem.user_id
 LEFT JOIN item ON unlockedItem.item_id = item.id
+LEFT JOIN unlockedAchievement ON User.id = unlockedAchievement.user_id
+LEFT JOIN achievement ON unlockedAchievement.achievement_id = achievement.id
 WHERE User.id = $userID
-GROUP BY User.id;
-";
+GROUP BY User.id
+;";
 
 $result = $conn->query($sql);
 
@@ -43,7 +46,8 @@ if ($result && $result->num_rows > 0) {
             'unlocked_areas' => explode(',', $progress['unlocked_areas']),
             'unlocked_abilities' => explode(',', $progress['unlocked_abilities']),
             'latest_checkpoints' => explode(',', $progress['latest_checkpoints']),
-            'unlocked_items' => explode(',', $progress['unlocked_items'])
+            'unlocked_items' => explode(',', $progress['unlocked_items']),
+            'unlocked_achievements' => explode(',', $progress['unlocked_achievements'])
         ]
     ];
 
