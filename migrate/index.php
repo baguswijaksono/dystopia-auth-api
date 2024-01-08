@@ -129,7 +129,33 @@ if ($conn->query($sqlUnlockedItem) === TRUE) {
     echo "Error creating unlockedItem table: " . $conn->error . "<br>";
 }
 
+// Create achievement table
+$sqlAchievement = "
+CREATE TABLE IF NOT EXISTS achievement (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    achievement VARCHAR(50) NOT NULL,
+    description TEXT
+)";
+if ($conn->query($sqlAchievement) === TRUE) {
+    echo "achievement table created successfully<br>";
+} else {
+    echo "Error creating achievement table: " . $conn->error . "<br>";
+}
 
+// Create unlockedAchievement table
+$sqlUnlockedAchievement = "
+CREATE TABLE IF NOT EXISTS unlockedAchievement (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    achievement_id INT NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (achievement_id) REFERENCES achievement(id),
+    FOREIGN KEY (user_id) REFERENCES User(id)
+)";
+if ($conn->query($sqlUnlockedAchievement) === TRUE) {
+    echo "unlockedAchievement table created successfully<br>";
+} else {
+    echo "Error creating unlockedAchievement table: " . $conn->error . "<br>";
+}
 
 $conn->close(); // Close the connection
 ?>
